@@ -1,0 +1,45 @@
+Terraform Error Doc:-
+
+1.Error: error configuring Terraform AWS Provider: error validating provider credentials: error calling sts:GetCallerIdentity: InvalidClientTokenId: The security token included in the request is invalid.
+        status code: 403, request id: d61594a3-e23f-4aea-bf0f-f5620f9810e6
+
+  on example.tf line 10, in provider "aws":
+  10: provider "aws" {
+
+Solution:-Do aws configure
+
+
+2.aws_instance.example: Creating...
+
+Error: Error launching source instance: VPCIdNotSpecified: No default VPC for this user. GroupName is only supported for EC2-Classic and default VPC.
+        status code: 400, request id: 3927cb3d-a199-4b17-bc8b-cd3c2397a849
+
+  on example.tf line 15, in resource "aws_instance" "example":
+  15: resource "aws_instance" "example" {
+
+Solution:-have configured wrong region where there was no default vpc was present
+
+SR. NO	Commands	Usage
+1	Terraform init	
+2	Terraform apply	
+3	Terraform Show	
+4	Terraform destroy	
+
+2.Error:
+Error: Error retrieving ALB: ValidationError: 'arn:aws:elasticloadbalancing:us-east-1:142943619081:loadbalancer/app/terraform-asg-example/3c34ba7e01acf723' is not a valid load balancer ARN
+        status code: 400, request id: 8aa5c3d0-8f36-452c-b743-2bcc8d1bb34e
+
+
+
+Error: Error retrieving Target Group: ValidationError: 'arn:aws:elasticloadbalancing:us-east-1:142943619081:targetgroup/terraform-asg-example/a0e66dba7f0d40db' is not a valid target group ARN
+        status code: 400, request id: b3a1bc6d-ddfe-4d7f-910f-323f9cf88645
+
+Solution:-
+For me the problem was the AWS credential, because I had used two profiles. I had changed the provider to correct profile and worked fine.
+[default]
+aws_access_key_id = <secret>
+aws_secret_access_key = <secret>
+[my_profile]
+aws_access_key_id = <secret>
+aws_secret_access_key = <secret>
+
